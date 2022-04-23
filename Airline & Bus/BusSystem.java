@@ -1,3 +1,4 @@
+//2020117898 황효성
 package 과제2;
 
 
@@ -13,6 +14,7 @@ public class BusSystem extends ReservationSystem { // ReservationSystem 클래�
 	
 	String busSeat;
 	int busSeatnum;
+	int busSeatnum2;
 	char busSeatstr;
 	
 	
@@ -51,22 +53,61 @@ public class BusSystem extends ReservationSystem { // ReservationSystem 클래�
 	public int reserveSeat(String seatName) {
 		// TODO Auto-generated method stub
 		
+	
+		int n=seatName.length();
 		
-		this.busSeatnum=seatName.charAt(0)-'0';
-		this.busSeatstr=seatName.charAt(1);
-		
-		if(this.Bus[67-busSeatstr][busSeatnum-1]==0)
+		if(n==3)
 		{
-			this.Bus[67-busSeatstr][busSeatnum-1]=1;
-			System.out.printf("[예약 성공] %s\n",seatName);
-			this.count++;
-			return 1;
+			busSeatnum=seatName.charAt(n-3)-'0';
+			busSeatnum2=seatName.charAt(n-2)-'0';
+			
+			
+			busSeatnum=(busSeatnum*10)+busSeatnum2;
+
+			busSeatstr=seatName.charAt(n-1);
 		}
-		else
-		{
-			System.out.printf("[예약 실패] %s: 이미 예약된 좌석입니다.\n",seatName);
+		else if(n==2){
+			
+			busSeatnum=seatName.charAt(n-2)-'0';
+			busSeatstr=seatName.charAt(n-1);
+			
+			if(busSeatnum>=10)
+			{
+				System.out.printf("%s: 숫자가 아닌 잘못된 좌석 이름입니다.\n",seatName);
+				System.out.println("[예약 실패]: 잘못된 좌석 이름입니다.");
+				return 0;
+			}
+			
+		
+		}
+		else {
+			System.out.println("[예약 실패]: 잘못된 좌석 이름입니다.");
 			return 0;
 		}
+		
+		try {
+			
+			
+			if(this.Bus[67-busSeatstr][busSeatnum-1]==0)
+			{
+				this.Bus[67-busSeatstr][busSeatnum-1]=1;
+				System.out.printf("[예약 성공] %s\n",seatName);
+				this.count++;
+				return 1;
+			}
+			else
+			{
+				System.out.printf("[예약 실패] %s: 이미 예약된 좌석입니다.\n",seatName);
+
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.printf("%s: 좌석의 범위를 넘은 잘못된 좌석 이름입니다.\n",seatName);
+			System.out.println("[예약 실패]: 잘못된 좌석 이름입니다.");
+		}
+		return 0;
 		
 		
 	}
@@ -74,7 +115,61 @@ public class BusSystem extends ReservationSystem { // ReservationSystem 클래�
 	@Override
 	public int cancelSeat(String seatName) {
 		// TODO Auto-generated method stub
-		return super.cancelSeat(seatName);
+		
+		int n=seatName.length();
+		
+		if(n==3)
+		{
+			busSeatnum=seatName.charAt(n-3)-'0';
+			busSeatnum2=seatName.charAt(n-2)-'0';
+			
+			
+			busSeatnum=(busSeatnum*10)+busSeatnum2;
+
+			busSeatstr=seatName.charAt(n-1);
+		}
+		else if(n==2){
+			
+			busSeatnum=seatName.charAt(n-2)-'0';
+			busSeatstr=seatName.charAt(n-1);
+			
+			if(busSeatnum>=10)
+			{
+				System.out.printf("%s: 숫자가 아닌 잘못된 좌석 이름입니다.\n",seatName);
+				System.out.println("[예약 실패]: 잘못된 좌석 이름입니다.");
+				return 0;
+			}
+			
+		
+		}
+		else {
+			System.out.println("[예약 실패]: 잘못된 좌석 이름입니다.");
+			return 0;
+		}
+		
+		try {
+			
+			
+			if(this.Bus[67-busSeatstr][busSeatnum-1]==1)
+			{
+				this.Bus[67-busSeatstr][busSeatnum-1]=0;
+				System.out.printf("[예약 취소 성공] %s\n",seatName);
+				this.count--;
+				return 1;
+			}
+			else
+			{
+				System.out.printf("[예약 취소 실패] %s: 예약 되지 않은 좌석입니다.\n",seatName);
+
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.printf("%s: 좌석의 범위를 넘은 잘못된 좌석 이름입니다.\n",seatName);
+			System.out.println("[예약 실패]: 잘못된 좌석 이름입니다.");
+		}
+		return 0;
 	}
 	
 	@Override
@@ -93,9 +188,23 @@ public class BusSystem extends ReservationSystem { // ReservationSystem 클래�
 			System.out.println("");
 			for(j=0;j<this.col;j++)
 			{
-				System.out.printf("%5d",this.Bus[i][j]);
+				if(Bus[i][j]==1)
+				{
+					System.out.print("    X");
+				}
+				else
+				{
+					System.out.printf("%5d",this.Bus[i][j]);
+				}
 			}
 			System.out.println("");
+			
+			if(i==0)
+			{
+				System.out.println("--------------------------------------------------");
+				System.out.println(" 앞                     통로                       뒤");
+				System.out.println("--------------------------------------------------");
+			}
 			
 		}
 		super.displaySeat(systemTitle);

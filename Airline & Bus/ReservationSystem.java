@@ -1,7 +1,9 @@
+//2020117898 황효성
+
 package 과제2;
 
 
-public class ReservationSystem implements ReservationInterface {
+public class ReservationSystem implements ReservationInterface { // ReservationInterface의 각 기능을 구현 또는 dummy function 추가
 	
 	
 	int row,col;

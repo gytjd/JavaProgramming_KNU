@@ -1,3 +1,4 @@
+//2020117898 황효성
 package 과제2;
 
 import java.util.Scanner;
@@ -12,6 +13,15 @@ public class ReservationApp {
 		Scanner scanner=new Scanner(System.in);
 		int menuNum;
 		
+		AirlineSystem airlineSystem=new AirlineSystem(scanner); // 화면 입력을 위해 생성한 Scanner 객체는 AirlineSystem 클래스와 BusSystem 클래스의 생성자의 파라미터로 전달하여 하나의 Scanner 객체를 공유함
+		airlineSystem.makeSeats(4, 10);
+		
+		
+		BusSystem busSystem=new BusSystem(scanner); // “0번 통합 예약 시스템 종료” 메뉴를 선택하기 전까지는 기존 예약된 현황 유지하고 있어야 됨
+		busSystem.makeSeats(3, 10);
+		
+		
+		
 		while(true)
 		{
 			System.out.println("------------------------------------");
@@ -22,7 +32,7 @@ public class ReservationApp {
 			System.out.println("------------------------------------");
 			
 		try {
-			System.out.print("메뉴를 선택해주세요: ");
+			System.out.print("메뉴를 선택해주세요: "); // 메인 메뉴를 화면에 출력하고, 사용자 입력 처리(오류 처리 기능 추가)
 			menuNum=scanner.nextInt();
 			
 		} catch (Exception e) {
@@ -32,10 +42,9 @@ public class ReservationApp {
 			continue;
 		}
 			
-			if(menuNum==1)
+			if(menuNum==1) // 사용자의 선택에 따라 항공사 예약 시스템 또는 버스 예약 시스템 기능을 실행시킴
 			{
-				AirlineSystem airlineSystem=new AirlineSystem(scanner);
-				airlineSystem.makeSeats(4, 10);
+
 				
 				
 				while(true)
@@ -96,11 +105,7 @@ public class ReservationApp {
 			}
 			else if(menuNum==2)
 			{
-				BusSystem busSystem=new BusSystem(scanner);
 				
-				busSystem.makeSeats(3, 10);
-				
-				int busNum;
 				
 				while(true)
 				{
