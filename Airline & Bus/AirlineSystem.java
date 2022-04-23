@@ -10,8 +10,10 @@ public class AirlineSystem extends ReservationSystem  {
 	Scanner scanner;
 	
 	int airlineMenunum;
+	
 	String airlineSeat;
 	int airlineSeatnum;
+	int airlineSeatnum2;
 	char airlineSeatstr;
 	
 	public AirlineSystem(Scanner scanner) {
@@ -49,8 +51,30 @@ public class AirlineSystem extends ReservationSystem  {
 	public int reserveSeat(String seatName) {
 		// TODO Auto-generated method stub
 		
-		this.airlineSeatnum=seatName.charAt(0)-'0';
-		this.airlineSeatstr=seatName.charAt(1);
+		int n=seatName.length();
+		
+		if(n==3)
+		{
+			airlineSeatnum=seatName.charAt(n-3)-'0';
+			airlineSeatnum2=seatName.charAt(n-2)-'0';
+			
+			
+			airlineSeatnum=(airlineSeatnum*10)+airlineSeatnum2;
+
+			airlineSeatstr=seatName.charAt(n-1);
+		}
+		else if(n==2){
+			
+			airlineSeatstr=seatName.charAt(n-1);
+			airlineSeatnum=seatName.charAt(n-2)-'0';
+			
+			
+		
+		}
+		else {
+			System.out.println("[예약 실패]: 잘못된 좌석 이름입니다.");
+			return 0;
+		}
 		
 		try {
 			
@@ -74,7 +98,6 @@ public class AirlineSystem extends ReservationSystem  {
 			System.out.printf("%s: 좌석의 범위를 넘은 잘못된 좌석 이름입니다.\n",seatName);
 			System.out.println("[예약 실패]: 잘못된 좌석 이름입니다.");
 		}
-		
 		return 0;
 
 		
